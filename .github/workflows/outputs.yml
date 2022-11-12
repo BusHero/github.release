@@ -8,8 +8,8 @@ jobs:
       - name: Set outputs
         id: step1
         run: |
-          echo "FAV_NUMBER=3" >> $GITHUB_STATE
-          echo "FAV_COLOR='blue'" >> $GITHUB_STATE
+          echo "FAV_NUMBER=3" >> $GITHUB_OUTPUT
+          echo "FAV_COLOR='blue'" >> $GITHUB_OUTPUT
       - name: Print outputs
         run: |
           echo "Fav number - ${{ steps.step1.outputs.FAV_NUMBER }}"
