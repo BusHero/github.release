@@ -8,7 +8,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Build
-        run: build.sh --PublishFolder ./publish/
+        run: ./build.sh --PublishFolder ./publish/
       - name: Publih build result
         uses: actions/upload-artifact@v3
         with:
