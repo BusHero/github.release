@@ -10,7 +10,7 @@ class Build : NukeBuild
 	private AbsolutePath ProjectPath => RootDirectory / "console";
 
 	[Parameter]
-	private AbsolutePath PublishFolder => RootDirectory / "publish";
+	private AbsolutePath PublishFolder = RootDirectory / "publish";
 
 	Target Publish => _ => _
 		.Executes(() => DotNetPublish(_ => _
