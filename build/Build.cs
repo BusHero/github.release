@@ -15,8 +15,8 @@ class Build : NukeBuild
 
 	Target SetOutputs => _ => _
 		.Executes(() => Console.WriteLine("""
-		"FAV_NUMBER=3" >> $GITHUB_OUTPUT
-		"FAV_COLOR='blue'" >> $GITHUB_OUTPUT
+		FAV_NUMBER=3 >> $GITHUB_OUTPUT
+		FAV_COLOR=blue >> $GITHUB_OUTPUT
 		"""));
 
 	Target Publish => _ => _
