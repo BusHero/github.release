@@ -23,6 +23,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-project
     steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: console
+      - name: Archive application
+        uses: thedoctor0/zip-release@master
+        with:
+          filename: console.zip
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
@@ -33,3 +41,12 @@ jobs:
           release_name: Release ${{ github.run_number }}
           draft: false
           prerelease: false
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./site.zip
+          asset_name: site-v${{ github.run_number }}.zip
+          asset_content_type: application/zip
