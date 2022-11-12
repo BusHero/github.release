@@ -2,6 +2,7 @@ using Nuke.Common;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.IO;
+using System;
 
 class Build : NukeBuild
 {
@@ -11,6 +12,12 @@ class Build : NukeBuild
 
 	[Parameter]
 	private AbsolutePath PublishFolder = RootDirectory / "publish";
+
+	Target SetOutputs => _ => _
+		.Executes(() => Console.WriteLine("""
+		echo "FAV_NUMBER=3" >> $GITHUB_OUTPUT
+		echo "FAV_COLOR='blue'" >> $GITHUB_OUTPUT
+		"""));
 
 	Target Publish => _ => _
 		.Executes(() => DotNetPublish(_ => _
