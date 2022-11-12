@@ -26,11 +26,11 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: console
+          name: build
       - name: Archive application
         uses: thedoctor0/zip-release@master
         with:
-          filename: console.zip
+          filename: build.zip
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
@@ -47,6 +47,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./site.zip
-          asset_name: site-v${{ github.run_number }}.zip
+          asset_path: ./build.zip
+          asset_name: build-v${{ github.run_number }}.zip
           asset_content_type: application/zip
