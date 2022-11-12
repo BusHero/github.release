@@ -1,7 +1,17 @@
 name: release
 on: push
 jobs:
-  GenerateGithubRelease:
+  build-project:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build
+        run: build.sh --PublishFolder ./publish/
+      - name: Publih build result
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: ./publish/
+  create-release:
     runs-on: ubuntu-latest
     steps:
       - name: Create release
