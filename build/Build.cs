@@ -3,6 +3,7 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.IO;
 using System;
+using System.IO;
 
 class Build : NukeBuild
 {
@@ -14,7 +15,14 @@ class Build : NukeBuild
 	private AbsolutePath PublishFolder = RootDirectory / "publish";
 
 	Target SetOutputs => _ => _
-		.Executes(() => Console.WriteLine(Environment.GetEnvironmentVariable("GITHUB_OUTPUT")));
+		.Executes(async () =>
+		{
+			var filename = Environment.GetEnvironmentVariable("GITHUB_OUTPUT");
+			using var file = File.OpenWrite(filename);
+			using var filewriter = new StreamWriter(file);
+			await filewriter.WriteLineAsync("FAV_NUMBER=5");
+			await filewriter.WriteLineAsync("FAV_COLOR=blue");
+		});
 
 	Target Publish => _ => _
 		.Executes(() => DotNetPublish(_ => _
