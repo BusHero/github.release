@@ -1,0 +1,16 @@
+name: outputs playground
+on: [push, workflow_dispatch]
+jobs:
+  job1:
+    name: Job 1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set outputs
+        id: step1
+        run: |
+          echo '::set-output name=FAV_NUMBER::3'
+          echo '::set-output name=FAV_COLOR::blue'
+      - name: Print outputs
+        run: |
+          echo "Fav number - ${{ steps.step1.outputs.FAV_NUMBER }}"
+          echo "Fav color - ${{ steps.step1.outputs.FAV_COLOR }}"
