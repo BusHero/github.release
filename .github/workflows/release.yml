@@ -15,12 +15,13 @@ jobs:
         with:
           dotnet-version: "7.0.x"
       - name: Build
-        run: ./build.sh --publish-folder ./publish-${{ matrix.os }}/
+        run: dotnet run --project build --publish-folder ./publish-${{ matrix.os }}/
       - name: Publih build result
         uses: actions/upload-artifact@v3
         with:
           name: build-${{ matrix.os }}
           path: ./publish-${{ matrix.os }}/
+          if-no-files-found: error
   create-release:
     name: Release Project
     runs-on: ubuntu-latest
