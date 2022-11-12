@@ -14,10 +14,7 @@ class Build : NukeBuild
 	private AbsolutePath PublishFolder = RootDirectory / "publish";
 
 	Target SetOutputs => _ => _
-		.Executes(() => Console.WriteLine("""
-		FAV_NUMBER=3 >> $GITHUB_OUTPUT
-		FAV_COLOR=blue >> $GITHUB_OUTPUT
-		"""));
+		.Executes(() => Console.WriteLine(Environment.GetEnvironmentVariable("GITHUB_OUTPUT")));
 
 	Target Publish => _ => _
 		.Executes(() => DotNetPublish(_ => _

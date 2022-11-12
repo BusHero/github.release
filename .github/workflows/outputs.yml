@@ -16,8 +16,11 @@ jobs:
         env:
           DOTNET_NOLOGO: true
           DOTNET_CLI_TELEMETRY_OPTOUT: false
-        run: dotnet run --project build --target Set-Outputs
-      - name: Print outputs
         run: |
-          echo "Fav number - ${{ steps.step1.outputs.FAV_NUMBER }}"
-          echo "Fav color - ${{ steps.step1.outputs.FAV_COLOR }}"
+          echo "FOO=BAR" >> $GITHUB_OUTPUT
+          echo "BAR=BAZ" >> $GITHUB_OUTPUT
+          dotnet run --project build --target Set-Outputs
+      # - name: Print outputs
+      #   run: |
+      #     echo "Fav number - ${{ steps.step1.outputs.FAV_NUMBER }}"
+      #     echo "Fav color - ${{ steps.step1.outputs.FAV_COLOR }}"
