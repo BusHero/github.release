@@ -10,15 +10,39 @@ using static GitHubActionTasks;
 using System.Threading.Tasks;
 using System.Linq;
 using Nuke.Common.Tools.GitVersion;
+using Nuke.Common.CI.GitHubActions;
+using Nuke.Common.Git;
 
 class Build : NukeBuild
 {
-	public static int Main() => Execute<Build>(x => x.Publish);
+	public static int Main() => Execute<Build>(x => x.CreateRelease);
+
+	[GitRepository]
+	readonly GitRepository Repository;
+
+	Target CreateRelease => _ => _
+		.Executes(() =>
+		{
+			// var credentials = new Credentials(GitHubActions.Instance.Token);
+			// var client = new GitHubClient(
+			// 	new ProductHeaderValue(
+			// 		nameof(NukeBuild)));
+			// client.Credentials = credentials;
+
+			// client.Repository.Release.Create("BusHero", "", new("")
+			// {
+
+			// });
+		});
+
+
+	GitHubActions GitHubActions => GitHubActions.Instance;
 
 	private AbsolutePath ProjectPath => RootDirectory / "console";
 
 	[GitVersion]
 	private GitVersion GitVersion;
+
 
 	[Parameter]
 	private AbsolutePath PublishFolder = RootDirectory / "publish";

@@ -67,9 +67,9 @@
           "items": {
             "type": "string",
             "enum": [
+              "CreateRelease",
               "Publish",
-              "Release",
-              "SetOutputs"
+              "Release"
             ]
           }
         },
@@ -79,9 +79,9 @@
           "items": {
             "type": "string",
             "enum": [
+              "CreateRelease",
               "Publish",
-              "Release",
-              "SetOutputs"
+              "Release"
             ]
           }
         },
