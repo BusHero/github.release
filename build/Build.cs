@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using static GitHubActionTasks;
 using System.Threading.Tasks;
 using System.Linq;
+using Nuke.Common.Tools.GitVersion;
 
 class Build : NukeBuild
 {
@@ -16,22 +17,25 @@ class Build : NukeBuild
 
 	private AbsolutePath ProjectPath => RootDirectory / "console";
 
+	[GitVersion]
+	private GitVersion GitVersion;
+
 	[Parameter]
 	private AbsolutePath PublishFolder = RootDirectory / "publish";
 
-	Target SetOutputs => _ => _
+	Target Publish => _ => _
 		.Executes(async () =>
 		{
-			await SetStepOutput(_ => _
-				.AddOutput("FAV_NUMBER", "5")
-				.AddOutput("FAV_COLOR", "blue"));
-		});
+			var version = GitVersion.MajorMinorPatch;
+			DotNetPublish(_ => _
+				.SetProject(ProjectPath)
+				.SetPublishProfile(Configuration.Release)
+				.SetVersion(version)
+				.SetOutput(PublishFolder));
 
-	Target Publish => _ => _
-		.Executes(() => DotNetPublish(_ => _
-			.SetProject(ProjectPath)
-			.SetPublishProfile(Configuration.Release)
-			.SetOutput(PublishFolder)));
+			await SetStepOutput(_ => _
+				.AddOutput("version", version));
+		});
 
 
 	Target Release => _ => _
